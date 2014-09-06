@@ -1,7 +1,10 @@
-var client = {};
+var client = {}
 
-client.renderHome = function(req, res, next){
-  res.render('home');
+client.senderPage = function(req, res, next){
+  res.render('sender');
 }
 
-module.exports = client;
+
+module.exports = function(app){
+  app.get('/', client.senderPage)
+}

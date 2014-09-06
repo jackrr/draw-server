@@ -1,7 +1,9 @@
 var client = {};
 
-client.renderRoot = function(req, res, next){
+client.display = function(req, res, next){
   res.render('display');
 }
 
-module.exports = client;
+module.exports = function(app){
+  app.get('/display', client.display)
+}

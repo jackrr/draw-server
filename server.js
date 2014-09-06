@@ -1,13 +1,11 @@
 var express = require('express');
 var app = express();
 
-var mobileClient = require('routes/mobile-client');
-var displayClient = require('routes/display-client');
 
 app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.use('/public',express.static(__dirname + '/public'));
 
-app.get('/', mobileClient.renderHome);
-app.get('/display', displayClient.renderRoot);
 
 app.use(function(req, res, next){
   console.log('%s %s', req.method, req.url);
@@ -15,6 +13,8 @@ app.use(function(req, res, next){
 });
 
 
-app.use('/public',express.static(__dirname + '/public'));
+
+require('./routes/display-client')(app);
+require('./routes/mobile-client')(app);
 
 app.listen(3000);
