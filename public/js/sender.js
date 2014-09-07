@@ -48,7 +48,7 @@ function Drawer(){
 function DrawAction(http, canvas){
   var self = this
   this.color = '#000000'
-  this.bore = 1
+  this.weight = 1
   this.user = 0
 
   this.addToPath = function(x,y){
@@ -61,14 +61,14 @@ function DrawAction(http, canvas){
     this.path = [[x,y]]
     canvas.beginPath()
     canvas.moveTo(x,y)
-    canvas.lineWidth = this.bore
+    canvas.lineWidth = this.weight
     canvas.strkeStyle = this.color
   }
 
   this.serialized = function(){
     return JSON.stringify({
       color: this.color,
-      bore: this.bore,
+      weight: this.weight,
       user: this.user,
       path: this.path
     })

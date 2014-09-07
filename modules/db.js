@@ -5,7 +5,7 @@ var MongoClient = require('mongodb').MongoClient,
 
 var init = function(callback){
   client.open(function(err, client){
-    db = client.db('draw-server');
+    db = client.db('draw-board');
     callback(db);
   })
 }
