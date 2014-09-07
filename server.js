@@ -1,6 +1,12 @@
-var express = require('express');
+var express = require('express'),
+    bodyParser = require('body-parser');
+
 var app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -13,8 +19,6 @@ app.use(function(req, res, next){
 });
 
 
-
-require('./routes/display-client')(app);
 require('./routes/mobile-client')(app);
 
 app.listen(3000);

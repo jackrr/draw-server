@@ -1,10 +1,10 @@
 function Http(){
   return {
     get: function(url, cb){
-      console.log('GET:', url)
+      return $.get(url, cb)
     },
-    post: function(url, body, cb){
-      console.log('POST:', url, body)
+    post: function(url, body, successCb){
+      return $.post(url, body, successCb)
     }
   }
 }
@@ -66,13 +66,12 @@ function DrawAction(http, canvas){
   }
 
   this.serialized = function(){
-    return {
+    return JSON.stringify({
       color: this.color,
       bore: this.bore,
       user: this.user,
-      path: JSON.stringify(this.path),
-      createdAt: this.createdAt
-    }
+      path: this.path
+    })
   }
 
   var afterSend = function(){
@@ -80,8 +79,9 @@ function DrawAction(http, canvas){
   }
 
   this.send = function(){
-    this.createdAt = Date.now()
-    http.post('draw-action', this.serialized(), afterSend)
+    http.post('draw-actions', this.serialized(), afterSend).fail(function(){
+      alert('Something went wrong')
+    })
   }
 
   return this
