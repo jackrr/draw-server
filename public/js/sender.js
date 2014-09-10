@@ -66,16 +66,16 @@ function DrawAction(http, canvas){
   }
 
   this.serialized = function(){
-    return JSON.stringify({
+    return {
       color: this.color,
       weight: this.weight,
       user: this.user,
       path: this.path
-    })
+    }
   }
 
   var afterSend = function(){
-    console.log('sent')
+    // called after successful post to server
   }
 
   this.send = function(){
