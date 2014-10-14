@@ -1,6 +1,4 @@
-var dbClient = require('../modules/db');
-
-var makeRoutes = function(app, drawActions){
+module.exports = function(app, drawActions){
   app.get('/', function(req, res, next){
     res.render('sender');
   });
@@ -13,12 +11,5 @@ var makeRoutes = function(app, drawActions){
       if (err) return console.log(err);
       res.json({message: 'success', action: doc});
     })
-  })
-}
-
-
-module.exports = function(app){
-  dbClient.getActions(function(drawActions){
-    makeRoutes(app, drawActions);
   })
 }

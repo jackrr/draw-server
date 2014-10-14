@@ -1,5 +1,6 @@
 var express = require('express'),
     bodyParser = require('body-parser');
+    dbClient = require('./modules/db');
 
 var app = express();
 
@@ -18,7 +19,9 @@ app.use(function(req, res, next){
   next();
 });
 
+dbClient.getActions(function(drawActions){
+  require('./routes/mobile-client')(app, drawActions);
+  require('./routes/display')(app, drawActions);
 
-require('./routes/mobile-client')(app);
-
-app.listen(3000);
+  app.listen(3000);
+})

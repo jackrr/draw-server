@@ -1,3 +1,5 @@
+var STROKE_COLOR = '#ffffff'
+
 function Http(){
   return {
     get: function(url, cb){
@@ -47,7 +49,7 @@ function Drawer(){
 
 function DrawAction(http, canvas){
   var self = this
-  this.color = '#000000'
+  this.color = STROKE_COLOR
   this.weight = 1
   this.user = 0
 
@@ -62,7 +64,7 @@ function DrawAction(http, canvas){
     canvas.beginPath()
     canvas.moveTo(x,y)
     canvas.lineWidth = this.weight
-    canvas.strkeStyle = this.color
+    canvas.strokeStyle = this.color
   }
 
   this.serialized = function(){
