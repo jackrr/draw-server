@@ -1,7 +1,8 @@
 var os = require('os')
 
 module.exports = function(app, drawActions){
-  var ip = os.networkInterfaces().en0.filter(function(addr){
+  var faces = (os.networkInterfaces().en0 || os.os.networkInterfaces().wlan0)
+  var ip = faces.filter(function(addr){
     return addr.family == 'IPv4'
   })[0].address
 
