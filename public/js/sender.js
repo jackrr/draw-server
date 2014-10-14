@@ -18,15 +18,34 @@ function Drawer(){
     console.log(e)
   }
 
+  var touchStart = function(e){
+    startAction(e.touches[0])
+  }
+
   var startAction = function(e){
     active = true
     action = new DrawAction(http, canvas)
     action.initPath(e.pageX, e.pageY)
   }
 
+  var touchMove = function(e){
+    if (active) {
+      moveAction(e.touches[0])
+    }
+  }
+
   var moveAction = function(e){
     if (active) {
       action.addToPath(e.pageX, e.pageY)
+    }
+  }
+
+  var touchEnd = function(e){
+    if (e.touches.length) {
+      endAction(e.touches[0])
+    } else {
+      active = false
+      action.send()
     }
   }
 
@@ -39,9 +58,15 @@ function Drawer(){
   this.watch = function(_http, element){
     http = _http
     canvas = element[0].getContext('2d')
-    element.mousedown(startAction)
-    element.mousemove(moveAction)
-    element.mouseup(endAction)
+    if (navigator.userAgent.match(/iphone|Android/ig)) {
+      element[0].addEventListener('touchstart', touchStart)
+      element[0].addEventListener('touchend', touchEnd)
+      element[0].addEventListener('touchmove', touchMove)
+    } else {
+      element.mousedown(startAction)
+      element.mousemove(moveAction)
+      element.mouseup(endAction)
+    }
   }
 
   return this
@@ -52,6 +77,7 @@ function DrawAction(http, canvas){
   this.color = STROKE_COLOR
   this.weight = 1
   this.user = 0
+
 
   this.addToPath = function(x,y){
     this.path.push([x,y])
